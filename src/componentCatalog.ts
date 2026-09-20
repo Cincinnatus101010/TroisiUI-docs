@@ -1,11 +1,4 @@
-export type ComponentDemoId =
-	| "button"
-	| "toggle-group"
-	| "rating"
-	| "number-input"
-	| "alert"
-	| "card"
-	| "tabs";
+export type ComponentDemoId = string;
 
 export interface ComponentEntry {
 	id: ComponentDemoId;
@@ -15,55 +8,228 @@ export interface ComponentEntry {
 	importLine: string;
 }
 
+export const COMPONENT_CATEGORIES = [
+	"Typography",
+	"Layout",
+	"Forms",
+	"Navigation",
+	"Feedback",
+	"Data",
+	"Media",
+	"Utility",
+] as const;
+
+function entry(
+	id: string,
+	name: string,
+	category: (typeof COMPONENT_CATEGORIES)[number],
+	description: string,
+	importName = name,
+): ComponentEntry {
+	return {
+		id,
+		name,
+		category,
+		description,
+		importLine: `import { ${importName} } from "@iantroisi/ui";`,
+	};
+}
+
 export const COMPONENT_CATALOG: ComponentEntry[] = [
-	{
-		id: "button",
-		name: "Button",
-		category: "Forms",
-		description: "Primary actions with size and variant options.",
-		importLine: 'import { Button } from "@iantroisi/ui";',
-	},
-	{
-		id: "toggle-group",
-		name: "ToggleGroup",
-		category: "Forms",
-		description: "Segmented single-choice control for view modes and filters.",
-		importLine: 'import { ToggleGroup } from "@iantroisi/ui";',
-	},
-	{
-		id: "rating",
-		name: "Rating",
-		category: "Forms",
-		description: "Star rating input with keyboard and hover preview.",
-		importLine: 'import { Rating } from "@iantroisi/ui";',
-	},
-	{
-		id: "number-input",
-		name: "NumberInput",
-		category: "Forms",
-		description: "Numeric field with stepper buttons and min/max clamping.",
-		importLine: 'import { NumberInput } from "@iantroisi/ui";',
-	},
-	{
-		id: "alert",
-		name: "Alert",
-		category: "Feedback",
-		description: "Inline status messages for success, warning, and danger.",
-		importLine: 'import { Alert } from "@iantroisi/ui";',
-	},
-	{
-		id: "card",
-		name: "Card",
-		category: "Data",
-		description: "Elevated surface for grouped content.",
-		importLine: 'import { Card } from "@iantroisi/ui";',
-	},
-	{
-		id: "tabs",
-		name: "Tabs",
-		category: "Navigation",
-		description: "Tabbed panels for switching related views.",
-		importLine:
-			'import { Tabs, TabsList, TabsTrigger, TabsPanel } from "@iantroisi/ui";',
-	},
+	entry(
+		"typography",
+		"Typography",
+		"Typography",
+		"Display, headings, body, caption, and inline code styles.",
+	),
+	entry(
+		"app-shell",
+		"AppShell",
+		"Layout",
+		"Dashboard frame with navbar, sidebar, and main content.",
+	),
+	entry("box", "Box", "Layout", "Padding, border, radius, and elevation primitives."),
+	entry("center", "Center", "Layout", "Flexbox centering wrapper."),
+	entry("container", "Container", "Layout", "Max-width page gutter container."),
+	entry("grid", "Grid", "Layout", "Responsive CSS grid with column presets."),
+	entry("stack", "Stack", "Layout", "Vertical or horizontal flex stack with gap."),
+	entry("divider", "Divider", "Layout", "Horizontal rule separator."),
+	entry("spacer", "Spacer", "Layout", "Token-based vertical spacer."),
+	entry("section", "Section", "Layout", "Titled content section with optional description."),
+	entry(
+		"page-header",
+		"PageHeader",
+		"Layout",
+		"Page title block with description and actions.",
+	),
+	entry("hero", "Hero", "Layout", "Marketing hero with eyebrow, title, and CTAs."),
+	entry("footer", "Footer", "Layout", "Site footer with brand line."),
+	entry("toolbar", "Toolbar", "Layout", "Sticky action bar for tool clusters."),
+	entry("button", "Button", "Forms", "Primary actions with size and variant options."),
+	entry(
+		"button-group",
+		"ButtonGroup",
+		"Forms",
+		"Grouped buttons with optional attached styling.",
+	),
+	entry("input", "Input", "Forms", "Text input with invalid state support."),
+	entry(
+		"input-group",
+		"InputGroup",
+		"Forms",
+		"Input with leading or trailing addons.",
+	),
+	entry("textarea", "Textarea", "Forms", "Multi-line text field."),
+	entry("select", "Select", "Forms", "Native select styled to match inputs."),
+	entry("combobox", "Combobox", "Forms", "Filterable single-select dropdown."),
+	entry("checkbox", "Checkbox", "Forms", "Boolean checkbox with optional label."),
+	entry("radio", "Radio", "Forms", "Single radio option (use inside RadioGroup)."),
+	entry(
+		"radio-group",
+		"RadioGroup",
+		"Forms",
+		"Fieldset wrapper for related radio options.",
+	),
+	entry("switch", "Switch", "Forms", "Toggle switch for on/off settings."),
+	entry("slider", "Slider", "Forms", "Range slider for numeric values."),
+	entry(
+		"toggle-group",
+		"ToggleGroup",
+		"Forms",
+		"Segmented single-choice control for view modes and filters.",
+	),
+	entry(
+		"rating",
+		"Rating",
+		"Forms",
+		"Star rating input with hover preview.",
+	),
+	entry(
+		"number-input",
+		"NumberInput",
+		"Forms",
+		"Numeric field with stepper buttons and min/max clamping.",
+	),
+	entry("file-input", "FileInput", "Forms", "Styled file picker button."),
+	entry("date-input", "DateInput", "Forms", "Date field with calendar popover."),
+	entry("color-input", "ColorInput", "Forms", "Native color picker input."),
+	entry("search-input", "SearchInput", "Forms", "Search field with icon affordance."),
+	entry(
+		"form",
+		"Form",
+		"Forms",
+		"Form layout with FormField, Label, helper, and error text.",
+		"Form, FormField, Label, FieldHelper, FieldError",
+	),
+	entry("fieldset", "Fieldset", "Forms", "Semantic field grouping with legend."),
+	entry("link", "Link", "Navigation", "Styled anchor for internal or external URLs."),
+	entry(
+		"navbar",
+		"Navbar",
+		"Navigation",
+		"Top navigation bar with brand and links.",
+	),
+	entry("sidebar", "Sidebar", "Navigation", "Vertical navigation with sections."),
+	entry(
+		"tabs",
+		"Tabs",
+		"Navigation",
+		"Tabbed panels for switching related views.",
+		"Tabs, TabsList, TabsTrigger, TabsPanel",
+	),
+	entry("breadcrumb", "Breadcrumb", "Navigation", "Hierarchy breadcrumb trail."),
+	entry("pagination", "Pagination", "Navigation", "Page number navigation."),
+	entry("stepper", "Stepper", "Navigation", "Multi-step progress indicator."),
+	entry("menu", "Menu", "Navigation", "Dropdown menu with items."),
+	entry(
+		"mobile-nav",
+		"MobileNav",
+		"Navigation",
+		"Drawer-style navigation for small screens.",
+	),
+	entry(
+		"command-palette",
+		"CommandPalette",
+		"Navigation",
+		"Command menu with fuzzy filter (⌘K pattern).",
+	),
+	entry("alert", "Alert", "Feedback", "Inline status alert with variants."),
+	entry("banner", "Banner", "Feedback", "Full-width page-level banner."),
+	entry("callout", "Callout", "Feedback", "Highlighted tip or notice block."),
+	entry("spinner", "Spinner", "Feedback", "Loading spinner with accessible label."),
+	entry("skeleton", "Skeleton", "Feedback", "Placeholder shimmer for loading UI."),
+	entry("progress", "Progress", "Feedback", "Determinate progress bar."),
+	entry("modal", "Modal", "Feedback", "Modal dialog with title and close control."),
+	entry("drawer", "Drawer", "Feedback", "Slide-over panel from screen edge."),
+	entry(
+		"toast",
+		"Toast",
+		"Feedback",
+		"Toast notifications via ToastProvider and useToast.",
+		"ToastProvider, useToast",
+	),
+	entry("tooltip", "Tooltip", "Feedback", "Hover/focus tooltip on a trigger."),
+	entry("popover", "Popover", "Feedback", "Click-triggered floating content."),
+	entry("table", "Table", "Data", "Data table with optional sortable headers."),
+	entry("card", "Card", "Data", "Elevated surface for grouped content."),
+	entry("panel", "Panel", "Data", "Panel with title, body, and footer."),
+	entry("list", "List", "Data", "Vertical list with ListItem rows."),
+	entry("badge", "Badge", "Data", "Small status badge pill."),
+	entry("tag", "Tag", "Data", "Tag label (badge variant styling)."),
+	entry("chip", "Chip", "Data", "Dismissible chip tag."),
+	entry("avatar", "Avatar", "Data", "User avatar with initials or image."),
+	entry(
+		"avatar-group",
+		"AvatarGroup",
+		"Data",
+		"Stacked avatars with overflow count.",
+	),
+	entry("stat", "Stat", "Data", "Metric label and value display."),
+	entry("timeline", "Timeline", "Data", "Vertical timeline of events."),
+	entry("accordion", "Accordion", "Data", "Expand/collapse accordion sections."),
+	entry("carousel", "Carousel", "Data", "Horizontal slide carousel."),
+	entry("empty-state", "EmptyState", "Data", "Empty collection placeholder."),
+	entry("code", "Code", "Data", "Inline code snippet styling."),
+	entry("code-block", "CodeBlock", "Data", "Multi-line preformatted code block."),
+	entry("copy-button", "CopyButton", "Data", "Copy-to-clipboard button."),
+	entry(
+		"description-list",
+		"DescriptionList",
+		"Data",
+		"Term/description pairs for metadata.",
+		"DescriptionList, DescriptionItem",
+	),
+	entry("blockquote", "Blockquote", "Data", "Quoted text with attribution."),
+	entry("kbd", "Kbd", "Data", "Keyboard shortcut key styling."),
+	entry("image", "Image", "Media", "Responsive image with Troisi framing."),
+	entry("video", "Video", "Media", "Video player wrapper."),
+	entry("lightbox", "Lightbox", "Media", "Fullscreen image lightbox overlay."),
+	entry("icon", "Icon", "Utility", "Accessible wrapper for inline SVG icons."),
+	entry("scroll-area", "ScrollArea", "Utility", "Scrollable region with max height."),
+	entry(
+		"visually-hidden",
+		"VisuallyHidden",
+		"Utility",
+		"Screen-reader-only text.",
+	),
+	entry(
+		"theme-toggle",
+		"ThemeToggle",
+		"Utility",
+		"Cycles light / dark / system when used with ThemeProvider.",
+	),
 ];
+
+export const HOOKS_AND_API = [
+	"useTheme",
+	"useToast",
+	"useDisclosure",
+	"useClickOutside",
+	"useFocusTrap",
+	"useMediaQuery",
+	"useLocalStorage",
+	"applyTheme",
+	"applyPreset",
+	"resolveTheme",
+	"joinClasses",
+] as const;

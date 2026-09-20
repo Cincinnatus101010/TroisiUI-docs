@@ -127,6 +127,16 @@ body.troisi-root {
 	border-radius: var(--troisi-radius-lg);
 }
 
+.docs-category {
+	margin-top: var(--troisi-space-10);
+}
+
+.docs-category__title {
+	margin-bottom: var(--troisi-space-4);
+	padding-bottom: var(--troisi-space-2);
+	border-bottom: 1px solid var(--troisi-border);
+}
+
 .docs-component-grid {
 	display: grid;
 	gap: var(--troisi-space-6);
